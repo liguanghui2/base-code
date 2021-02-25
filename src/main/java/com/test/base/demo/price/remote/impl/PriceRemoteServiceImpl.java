@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 
+/**
+ * @author liguanghui9105
+ */
 @Service
 public class PriceRemoteServiceImpl implements PriceRemoteService {
     @Override

@@ -1,11 +1,14 @@
 package com.test.base.demo.service.impl;
 
+import com.test.base.demo.bean.user.User;
+import com.test.base.demo.mapper.user.UserMapper;
 import com.test.base.demo.price.remote.PriceRemoteService;
 import com.test.base.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.concurrent.*;
 
 @Service
@@ -13,6 +16,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PriceRemoteService priceRemoteService;
+    @Autowired
+    private UserMapper userMapper;
 
     ExecutorService executorService = Executors.newSingleThreadExecutor();
     ExecutorService fixService = Executors.newFixedThreadPool(10);
@@ -20,15 +25,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String getUserName(Long userId) {
-
-        /*for(int i=0;i<10;i++){
-            Task task=new Task();
-            executorService.execute(task);
-        }*/
-        /*for(int i=0;i<Integer.MAX_VALUE;i++){
-            Task task=new Task();
-            cacheService.execute(task);
-        }*/
         if (userId == 1) {
             System.out.println("方法進入");
             executorService.execute(new Runnable() {
@@ -68,7 +64,7 @@ public class UserServiceImpl implements UserService {
             });
             String nameAndPrice = null;
             try {
-                nameAndPrice = "小明"+submit.get();
+                nameAndPrice = "小明" + submit.get();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -78,18 +74,20 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    /*class Task extends Thread{
+    @Override
+    public User getUserByUserNum(Integer userNum) {
+        return null;
+    }
 
-        @Override
-        public void run() {
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.println("***************");
-        }
-    }*/
+    @Override
+    public Long addUser(User user) {
+        userMapper.addUser(user);
+        return user.getId();
+    }
 
-
+    @Override
+    public List<User> selectUsersByUserNum(Integer userNum) {
+        List<User> users = userMapper.selectUsersByUserNum(userNum);
+        return users;
+    }
 }
