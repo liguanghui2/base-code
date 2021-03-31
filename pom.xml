@@ -65,6 +65,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- 生产word文档-->
+        <dependency>
+            <groupId>com.deepoove</groupId>
+            <artifactId>poi-tl</artifactId>
+            <version>1.7.3</version>
+        </dependency>
     </dependencies>
 
     <build>
